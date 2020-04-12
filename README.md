@@ -9,4 +9,4 @@ textile
 hazardous waste
 things for REUSE
 electronic waste
-![Screen of work in excel](images/almaty.png)
+![Screen of work in excel](screens/ala.png)
