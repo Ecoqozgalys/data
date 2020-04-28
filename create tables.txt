@@ -1,0 +1,48 @@
+create table users(user_id number(20) constraint user_id_pk primary key,
+                    first_name varchar2(20) constraint user_fn_nn not null,
+                    last_name varchar2(20) constraint user_ln_nn not null,
+                    city varchar2(20) not null, 
+                    phone number(11) not null, 
+                    email varchar2(50) CHECK(REGEXP_LIKE(email,'.+@gmail\.com$')),
+                    password varchar2(50) CHECK(REGEXP_like(password,'[A-Za-z0-9._%+-]{5,12}')));
+
+create table admin(admin_id number(20) constraint admin_id_pk primary key,
+                    first_name varchar2(20) constraint admin_fn_nn not null,
+                    last_name varchar2(20) constraint admin_ln_nn not null,
+                    email varchar2(50) CHECK(REGEXP_LIKE(email,'.+@gmail\.com$')),
+                    password varchar2(50) CHECK(REGEXP_like(password,'[A-Za-z0-9._%+-]{5,12}')));
+                    
+create table organizations(org_id number(20) constraint org_id_pk primary key,
+                    name varchar2(50) constraint org_name_nn not null,
+                    address varchar2(50) constraint org_address_nn not null,
+                    contact number(11) CHECK(REGEXP_LIKE(contact,'[0-9]{11}')),
+                    working_time varchar2(200));  
+                    
+create table faq(question varchar2(500) not null,
+                    answer varchar2(1000)); 
+
+create table questions(topic varchar2(100) constraint q_topic_nn not null,
+                    answer varchar2(1000) constraint q_ans_nn not null,
+                    user_id number(20) not null,
+                    constraint q_user_id FOREIGN KEY(user_id) references users);  
+
+create table request(req_date DATE DEFAULT sysdate,
+                    type_of_material varchar2(100) constraint req_type_nn not null,
+                    user_id number(20) not null,
+                    org_id number(20) not null,
+                    constraint req_user_id FOREIGN KEY(user_id) references users,
+                    constraint req_org_id FOREIGN KEY(org_id) references organizations);                    
+
+create table blog(blog_id number(20) constraint blog_id_pk primary key,
+                    topic varchar2(25) constraint blog_topic_nn not null,
+                    header varchar2(25) constraint blog_header_nn not null,
+                    main_content varchar2(255) constraint blog_content_nn not null,
+                    org_id number(20) not null,
+                    constraint blog_org_id FOREIGN KEY(org_id) references organizations);       
+
+create table materials(org_id number(20) not null,
+                    material_type varchar2(100) constraint mat_type_nn not null,
+                    constraint mat_org_id FOREIGN KEY(org_id) references organizations);     
+create table brands(org_id number(20) not null,
+                    sales varchar2(200) constraint brand_sales_nn not null,
+                    constraint brand_org_id FOREIGN KEY(org_id) references organizations);  
