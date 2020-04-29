@@ -11,4 +11,4 @@ We have collected the data about recycling points in the city as :
 - electronic waste
 ![Screen of work in excel](screens/ala.png)
 
-![ERD](ERD.png)
+![ERD](erd_upd.png)
